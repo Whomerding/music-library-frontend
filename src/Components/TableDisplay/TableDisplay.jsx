@@ -1,25 +1,33 @@
 import React, { useState, useEffect, Component } from 'react';
 import axios from 'axios';
 
-function TableDisplay() {
-    
-    useEffect(()=> {
-        TableResponses ();
-    }, []);
-    
-    const [songs, setSongs] = useState([])
-
-
-    async function TableResponses(){
-        const response = await axios.get('http://127.0.0.1:8000/api/music/');
-        console.log(response.data);
-        setSongs(response.data)
-    }
+const TableDisplay = (props) => {
     return ( 
-        <div>
-            <button onClick={() => TableDisplay()}>Get All Songs</button>
-        </div>
-     );
-}
-
-export default TableDisplay
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Album</th>
+                    <th>Artist</th>
+                    <th>Genre</th>
+                    <th>Release Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {props.parentSongs.map((song) => {
+                    return (
+                        <tr>
+                            <td>{song.title}</td>
+                            <td>{song.album}</td>
+                            <td>{song.artist}</td>
+                            <td>{song.genre}</td>
+                            <td>{song.release_date}</td>
+                        </tr>
+                    );
+                })}
+            </tbody>
+        </table>
+        );
+    }
+ 
+export default TableDisplay;
