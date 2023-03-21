@@ -1,5 +1,4 @@
-import React, { useState, useEffect, Component } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect} from 'react';
 
 const TableDisplay = (props) => {
     return ( 
@@ -17,7 +16,7 @@ const TableDisplay = (props) => {
                 {props.parentSongs.map((song) => {
                     return (
                         <tr>
-                            <td>{song.title}</td>
+                            <td>{song.title} key=</td>
                             <td>{song.album}</td>
                             <td>{song.artist}</td>
                             <td>{song.genre}</td>
