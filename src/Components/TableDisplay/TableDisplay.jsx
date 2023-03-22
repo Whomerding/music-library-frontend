@@ -1,6 +1,7 @@
-import React, { useState, useEffect} from 'react';
+import React from 'react';
 
-const TableDisplay = (props) => {
+
+const TableDisplay = ({songs}) => {
     return ( 
         <table>
             <thead>
@@ -13,20 +14,18 @@ const TableDisplay = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {props.parentSongs.map((song) => {
-                    return (
-                        <tr>
-                            <td>{song.title} key=</td>
-                            <td>{song.album}</td>
-                            <td>{song.artist}</td>
-                            <td>{song.genre}</td>
-                            <td>{song.release_date}</td>
-                        </tr>
-                    );
-                })}
+               
+            {songs.map((el)=>(       
+                <tr>
+                    <td>{el.title}</td>
+                    <td>{el.album}</td>
+                    <td>{el.artist}</td>
+                    <td>{el.genre}</td>
+                    <td>{el.release_date}</td>
+                </tr> 
+                ))};
             </tbody>
         </table>
         );
-    }
- 
+}
 export default TableDisplay;

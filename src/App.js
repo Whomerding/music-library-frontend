@@ -1,34 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, {useState} from "react";
 import NavigationBar from "./Components/NavigationBar/NavigationBar";
-import TableDisplay from "./Components/TableDisplay/TableDisplay";
 import AddMusic from"./Components/AddMusic/AddMusic";
-import axios from "axios";
+import SongPage from "./Components/Pages/SongPage";
+import SearchMusic from "./Components/SearchMusic/SearchMusic";
 
 
-function App() {
-  const [songs, setSongs] = useState ([{}])
 
-useEffect(() => {
-  getAllSongs();
-}, []);
-
-
-async function getAllSongs() {
-  const response = await axios.get("http://127.0.0.1:8000/api/music/");
-  console.log(response.data);
-  setSongs(response.data);
-}
-async function createSong(newSong){
-  let response = await axios.post('http://127.0.0.1:8000/api/music/', newSong);
-  if (response.status === 201) {
-    await getAllSongs();
-  }
-}
+function App({}) {
+  const [searchTerm, setSearchTerm] = useState("")
+  const [toggle, setToggle] = useState(false);
 
 return (
   <div>
     <NavigationBar/>
-    <TableDisplay parentSongs = {songs} />
+    <SearchMusic setSearchTerm={setSearchTerm} setToggle={setToggle} toggle={toggle}/>
+    <SongPage searchTerm ={searchTerm} toggle={toggle}/>
     <AddMusic/>
   </div>
 );

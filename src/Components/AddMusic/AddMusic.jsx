@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 
-const AddMusic = () => {
+const AddMusic = () => { 
     const[songData, setSongData] = useState({
    title: '',
    artist: '',
@@ -9,9 +10,13 @@ const AddMusic = () => {
    release_date: '',
    genre: ''
 });
-
+   
    const handleSubmit = async(event) => {
        event.preventDefault();
+       const formattedDate = moment(songData.date_field).format('YYYY-MM-DD');
+        axios.post('http://127.0.0.1:8000/api/music/', {release_date: formattedDate })
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
        try {
         await axios.post('http://127.0.0.1:8000/api/music/', songData);
         console.log('Song added!');
@@ -20,11 +25,7 @@ const AddMusic = () => {
       }
     };
     const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setSongData((prevData) => ({
-          ...prevData,
-          [name]: value
-        }));
+        setSongData({ ...songData, [event.target.name]: event.target.value });
       };
    return (
        <form onSubmit={handleSubmit}>
@@ -35,9 +36,9 @@ const AddMusic = () => {
            <label>Album</label>
            <input type='text' name = 'album' value={songData.album} onChange={handleInputChange}/>
            <label>Release Date</label>
-           <input type='date' name = 'date' value={songData.release_date} onChange={handleInputChange}/>
+           <input type='date' name = 'release_date' value={songData.date_field} onChange={handleInputChange}/>
            <label>Genre</label>
-           <input type='text' vname = 'genre' value={songData.genre} onChange={handleInputChange}/>
+           <input type='text' name = 'genre' value={songData.genre} onChange={handleInputChange}/>
            <button type='submit'>Add Song</button>
        </form>
     );
